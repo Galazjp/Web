@@ -1,0 +1,38 @@
+<%= form_with(model: user, local: true) do |form| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :profile_picture %>
+    <%= form.file_field :profile_picture, class: "form-control-file" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :names %>
+    <%= form.text_field :names, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= form.label :lastnames %>
+    <%= form.text_field :lastnames, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= form.label :date_of_birth %>
+    <%= form.date_select :date_of_birth, class:"form-control" %>
+  </div>
+  <div class="form-group">
+    <%= form.label :phrase_description, 'Phrase' %>
+    <%= form.text_field :phrase_description, value: @phrase.description, class: "form-control" %>
+  </div>
+  <div class="actions float-right">
+    <%= form.submit 'Update Profile', :class => "btn btn-primary my-2"%>
+  </div>
+<% end %>

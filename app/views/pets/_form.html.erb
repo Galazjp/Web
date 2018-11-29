@@ -1,0 +1,41 @@
+<%= form_with(model: pet, local: true) do |form| %>
+  <% if pet.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(pet.errors.count, "error") %> prohibited this pet from being saved:</h2>
+      <ul>
+        <% pet.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :image %>
+    <%= form.file_field :image, class: "form-control-file" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :names %>
+    <%= form.text_field :names, class:"form-control"%>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :date_of_birth %>
+    <%= form.date_select :date_of_birth, class:"form-control" %>
+  </div>
+ 
+  <div class="form-group">
+    <%= form.label :types %>
+    <%= form.collection_select(:type_ids, Type.all, :id, :name, { :prompt => 'Select a Type', :selected => @pet.type_ids }, {:multiple => true,  class: 'form-control' })%>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :location %>
+    <%= form.collection_select(:location_id, Location.all, :id, :city, { :prompt => 'Select a Location', :selected => @pet.location_id }, { class: 'form-control' }) %>
+  </div>
+
+  <div class="actions float-right">
+    <%= form.submit 'Save Pet', :class => "btn btn-primary my-2"%>
+  </div>
+<% end %>

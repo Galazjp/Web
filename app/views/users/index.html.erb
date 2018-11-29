@@ -1,0 +1,73 @@
+<div class="container-fluid">
+      <div class="row">
+        <div class="sidebar card">
+          <%= image_tag(@user.profile_picture.url, alt: "/assets/pet.png", class: "placeholder card-img-top") if @user.profile_picture? %>
+          <ul class="nav nav-sidebar card-body">
+            <li>
+              <p>
+                <strong>Email:</strong><br>
+                <%= @user.email %>
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Name:</strong><br>
+                <%= @user.names %> <%= @user.lastnames %>
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Date of Birth:</strong><br>
+                <%= @user.date_of_birth %>
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Phrase:</strong><br>
+                <%= @phrase.description %>
+              </p>
+            </li>
+          </ul>
+          <div class="btn-group">
+            <%= link_to 'Edit', edit_user_path(@user), class:"btn btn-sm btn-outline-secondary"%>
+            <%= link_to 'Delete Account', @user, method: :delete, data: { confirm: 'Are you sure?'}, class:"btn btn-sm btn-outline-secondary"%></td>
+          </div>
+        </div>
+        <div class="col-sm-12 main">
+          <div class="row">
+            <h1 class="page-header">My Pets</h1>
+            <div class="card-columns">
+              <% @user.pet.each do |pet| %>
+                <div class="card">
+                  <%= image_tag(pet.image.url, alt: "/assets/pet.png", class: "card-img-top") if pet.image? %>
+                  <div class="card-body">
+                    <h5 class="card-title"><%= pet.names%></h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><%= pet.rating %></h6>
+                    <p class="card-text">
+                      <%= pet.location.city %>,
+                      <%= pet.location.state %>,
+                      <%= pet.location.country %>
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <%= link_to 'Profile', pet, class:"btn btn-sm btn-outline-secondary"%>
+                        <%= link_to 'Edit', edit_pet_path(pet), class:"btn btn-sm btn-outline-secondary"%>
+                        <%= link_to 'Delete', pet, method: :delete, data: { confirm: 'Are you sure?'}, class:"btn btn-sm btn-outline-secondary"%></td>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <footer class="text-muted">
+    <div class="container ">
+      <p class="float-right">
+        <%= link_to 'New Pet', new_pet_path, class:"btn btn-primary my-2"%>
+      </p>
+    </div>
+  </footer>

@@ -1,0 +1,81 @@
+<div class="container-fluid">
+      <div class="row">
+        <div class="sidebar card ">
+          <%= image_tag(@pet.image.url, alt: "/assets/pet.png", class: "placeholder card-img-top") if @pet.image? %>
+          <ul class="nav nav-sidebar card-body">
+            <li>
+              <p>
+                <strong>Names:</strong>
+                <%= @pet.names %>
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>User:</strong>
+                <%= @pet.user.email %>
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Rating:</strong>
+                <%= @pet.rating %>
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Location:</strong>
+                <%= @pet.location.city %>, <%= @pet.location.state %>, <%= @pet.location.country%>
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Date of Birth:</strong>
+                <%= @pet.date_of_birth %>
+              </p>
+            </li>
+          </ul>
+          <div class="btn-group">
+            <% if user_signed_in?%>
+              <%= link_to 'Review', new_review_path(:pet => @pet), class:"btn btn-sm btn-outline-primary" %>
+              <% if current_user.id == @pet.user.id%>
+                <%= link_to 'Edit', edit_pet_path(@pet), class:"btn btn-sm btn-outline-secondary" %>
+                <%= link_to 'Delete', @pet, method: :delete, data: { confirm: 'Are you sure?'}, class:"btn btn-sm btn-outline-secondary"%>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <div class="col-sm-12 main">
+          <div class="row">
+            <div class="card-columns">
+              <% @pet.type.each do |t| %>
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title"><%= t.name %></h5>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="card-columns">
+              <% @pet.review.each do |r| %>
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title"><%= r.rating %></h4>
+                    <h5 class="card-title"><%= r.title %></h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><%= r.user.email %></h6>
+                    <%= link_to 'Read', r %>
+                    <% if user_signed_in?%>
+                      <% if current_user.id == r.user.id%>
+                        <%= link_to 'Edit', edit_review_path(r)%>
+                        <%= link_to 'Delete', r, method: :delete, data: { confirm: 'Are you sure?' }%>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>

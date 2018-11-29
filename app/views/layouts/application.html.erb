@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Web</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+      <a href= <%= users_path %> class="navbar-brand col-sm-2 col-md-1 mr-0"> Home</a>
+      <a href= <%= pets_path %> class="navbar-brand col-s2 col-m1 mr-0"> Pets</a>
+      <a href= <%= reviews_path %> class="navbar-brand col-s2 col-m1 mr-0"> Reviews</a>
+      <a href= <%= topics_path %> class="navbar-brand col-s2 col-m1 mr-0"> Topics</a>
+      <a href= <%= types_path %> class="navbar-brand col-s2 col-m1 mr-0"> Types</a>
+      <a href= <%= locations_path %> class="navbar-brand col-s2 col-m1 mr-0"> Locations</a>
+      <% if user_signed_in?%>
+        <%= link_to 'Sign Out', destroy_user_session_path, :method => :delete, class:"nav-link"%>
+      <% else%>
+        <div class="btn-group">
+          <%= link_to 'Sign In', new_user_session_path, class:"nav-link"%>
+          <%= link_to 'Sign Up', new_user_registration_path, class:"nav-link"%>
+        </div>
+      <% end %>
+    </nav>
+    <%= yield %>
+  </body>
+
+</html>

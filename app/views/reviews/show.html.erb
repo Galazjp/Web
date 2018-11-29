@@ -1,0 +1,68 @@
+<section class="jumbotron text-center">
+  <div class="container">
+    <h1 class="jumbotron-heading"><%= @review.title %></h1>
+    <p>
+      <strong>Rating:</strong>
+      <%= @review.rating %>
+    </p>
+    <p>
+      <strong>By:</strong>
+      <%= @review.user.email %>
+    </p>
+  </div>
+</section>
+
+<div class="row">
+  <div class="col-6 col-md-4">
+    <%= image_tag(@review.pet.image.url, alt: "/assets/pet.png", class: "card-img-top") if @review.pet.image? %>
+    <div class="card-body">
+      <%= link_to @review.pet.names, @review.pet, class:"card-title btn btn-sm btn-outline-primary"%>
+      <h6 class="card-subtitle mb-2 text-muted"><%= @review.pet.user.email %></h6>
+      <div class="btn-group">
+        <% @review.topic.each do |t| %>
+          <%= link_to t.name, t, class:"btn btn-sm btn-outline-primary"%>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-8">
+    <h4> <strong>Content:</strong> </h4>
+    <div class="row">
+      <div class="col-12 col-md-8">
+        <div class="card-body">
+          <p class="card-text"><%= @review.content %></p>
+        </div>
+      </div>
+    </div>
+    <h6> <strong>Comments:</strong> </h6>
+    <div class="row">
+      <% @review.comment.each do |c| %>
+        <div class="col-12 col-md-8">
+          <div class="card-body">
+            <h7 class="card-title"><%= c.title %></h7>
+            <p class="card-text"><%= c.title %>, <%= c.content %> </p>
+            <div class="btn-group">
+              <% if user_signed_in?%>
+                <% if current_user.id == c.user.id%>
+                  <%= link_to 'Edit', edit_comment_path(c), class:"btn btn-sm btn-outline-secondary"%>
+                  <%= link_to 'Destroy', c, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-sm btn-outline-secondary" %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="row">
+      <%= link_to 'Comment', new_comment_path(:review => @review), class:"btn btn-sm btn-outline-primary" %>
+      <% if user_signed_in?%>
+        <% if current_user.id == @review.user.id%>
+          <%= link_to 'Edit', edit_review_path(@review), class:"btn btn-sm btn-outline-secondary" %>
+          <%= link_to 'Destroy', @review, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-sm btn-outline-secondary" %>
+        <% end %>
+      <% end %>
+    </div>
+  
+  </div>
+</div>
